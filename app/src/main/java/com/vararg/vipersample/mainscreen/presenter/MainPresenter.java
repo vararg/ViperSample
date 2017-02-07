@@ -68,6 +68,9 @@ public class MainPresenter {
                     view.hideProgress();
                     view.onUsersReceived(users);
                 },
-                throwable -> view.showError(), count);
+                throwable -> {
+                    view.hideProgress();
+                    view.showError();
+                }, count);
     }
 }

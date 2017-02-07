@@ -1,22 +1,21 @@
 package com.vararg.vipersample.data;
 
-import android.content.res.Resources;
-
-import com.vararg.vipersample.app.AppModule;
 import com.vararg.vipersample.data.users.UserStorage;
+import com.vararg.vipersample.network.retrofit.NetworkModule;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 /**
  * Created by vararg on 27-01-17.
  */
 
-@Module(includes = AppModule.class)
+@Module(includes = {NetworkModule.class})
 public class DataModule {
 
     @Provides
-    UserStorage provideUserStorage(Resources resources) {
-        return new UserStorage(resources);
+    UserStorage provideUserStorage(Retrofit retrofit) {
+        return new UserStorage(retrofit);
     }
 }

@@ -40,7 +40,6 @@ public class GetUsersInteractor {
 
     protected Flowable<Collection<UserViewModel>> createFlowable(Integer amount) {
         return storage.getUsers(amount)
-                .delay(2, TimeUnit.SECONDS)
                 .map(mapper::map);
     }
 

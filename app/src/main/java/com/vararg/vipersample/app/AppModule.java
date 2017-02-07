@@ -27,7 +27,6 @@ public class AppModule {
         return AndroidSchedulers.mainThread();
     }
 
-
     @Provides
     @Job
     Scheduler provideJobScheduler() {
