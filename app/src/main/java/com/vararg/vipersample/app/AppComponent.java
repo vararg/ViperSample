@@ -11,7 +11,7 @@ import dagger.Component;
 /**
  * Created by vararg on 27-01-17.
  */
-
+@Singleton
 @Component(modules = {AppModule.class, NetworkModule.class})
 public interface AppComponent {
     MainScreenSubcomponent plus(MainScreenModule mainScreenModule);

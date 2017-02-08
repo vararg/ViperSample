@@ -3,6 +3,8 @@ package com.vararg.vipersample.app;
 import android.app.Application;
 import android.content.res.Resources;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Scheduler;
@@ -23,18 +25,18 @@ public class AppModule {
 
     @Provides
     @Main
-    Scheduler provideMainScheduler() {
+    static Scheduler provideMainScheduler() {
         return AndroidSchedulers.mainThread();
     }
 
     @Provides
     @Job
-    Scheduler provideJobScheduler() {
+    static Scheduler provideJobScheduler() {
         return Schedulers.computation();
     }
 
-    @Provides
+/*    @Provides
     Resources provideResources() {
         return application.getResources();
-    }
+    }*/
 }

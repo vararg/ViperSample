@@ -11,9 +11,8 @@ import retrofit2.Retrofit;
  * Created by vararg on 27-01-17.
  */
 
-@Module(includes = {NetworkModule.class})
+@Module
 public class DataModule {
-
     @Provides
     UserStorage provideUserStorage(Retrofit retrofit) {
         return new UserStorage(retrofit);

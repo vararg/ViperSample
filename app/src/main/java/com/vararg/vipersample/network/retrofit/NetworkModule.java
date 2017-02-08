@@ -27,24 +27,23 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    Gson provideGson() {
+    static Gson provideGson() {
         return new Gson();
     }
 
     @Provides
     @Singleton
-    CallAdapter.Factory provideCallAdapterFactory() {
+    static CallAdapter.Factory provideCallAdapterFactory() {
         return RxJava2CallAdapterFactory.create();
     }
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttpClient() {
+    static OkHttpClient provideOkHttpClient() {
         return new OkHttpClient();
     }
 
     @Provides
-    @Singleton
     Retrofit provideRetrofit(Gson gson, CallAdapter.Factory callAdapterFactory, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)

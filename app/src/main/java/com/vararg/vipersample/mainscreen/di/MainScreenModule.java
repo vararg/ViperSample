@@ -39,19 +39,21 @@ public class MainScreenModule {
     }
 
     @Provides
-    GetUsersInteractor provideGetUsersInteractor(@Job Scheduler jobScheduler, @Main Scheduler mainScheduler,
+    @MainScreenScope
+    static GetUsersInteractor provideGetUsersInteractor(@Job Scheduler jobScheduler, @Main Scheduler mainScheduler,
                                                  UserStorage storage, UserMapper userMapper) {
         return new GetUsersInteractor(jobScheduler, mainScheduler, storage, userMapper);
     }
 
     @Provides
-    UserMapper provideUserMapper() {
+    @MainScreenScope
+    static UserMapper provideUserMapper() {
         return new UserMapper();
     }
 
     @Provides
-    @Singleton
-    MainPresenter provideMainPresenter(GetUsersInteractor getUsersInteractor) {
+    @MainScreenScope
+    static MainPresenter provideMainPresenter(GetUsersInteractor getUsersInteractor) {
         return new MainPresenter(getUsersInteractor);
     }
 

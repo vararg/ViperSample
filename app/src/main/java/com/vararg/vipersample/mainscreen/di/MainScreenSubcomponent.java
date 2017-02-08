@@ -12,7 +12,7 @@ import dagger.Subcomponent;
  * Created by vararg on 06-02-17.
  */
 
-@Singleton
+@MainScreenScope
 @Subcomponent(modules = MainScreenModule.class)
 public interface MainScreenSubcomponent {
     void inject(MainView view);
