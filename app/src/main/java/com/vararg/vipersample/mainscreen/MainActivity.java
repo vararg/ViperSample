@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private MainScreenSubcomponent mainScreenSubcomponent;
     private MainPresenter presenter;
     private MainRouter mainRouter;
+    private ScopeHolder scopeHolder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,9 +30,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.view_main);
         mainView = (MainView) findViewById(R.id.view_main);
 
-        mainScreenModule = new MainScreenModule(this);
-        mainScreenSubcomponent = ((App) getApplication()).getComponent().plus(mainScreenModule);
-
+        scopeHolder = (ScopeHolder) getLastCustomNonConfigurationInstance();
+        if (scopeHolder == null) {
+            mainScreenModule = new MainScreenModule();
+            mainScreenSubcomponent = ((App) getApplication()).getComponent().plus(mainScreenModule);
+            scopeHolder = new ScopeHolder(mainScreenModule, mainScreenSubcomponent);
+        } else {
+            mainScreenModule = scopeHolder.module;
+            mainScreenSubcomponent = scopeHolder.subcomponent;
+        }
+        mainScreenModule.setMainActivity(this);
         mainScreenSubcomponent.inject(mainView);
 
         presenter = mainScreenSubcomponent.mainPresenter();
@@ -57,6 +65,21 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         if (isFinishing()) {
             mainScreenModule.setMainActivity(null);
+        }
+    }
+
+    @Override
+    public ScopeHolder onRetainCustomNonConfigurationInstance() {
+        return scopeHolder;
+    }
+
+    private static class ScopeHolder {
+        final MainScreenModule module;
+        final MainScreenSubcomponent subcomponent;
+
+        public ScopeHolder(MainScreenModule module, MainScreenSubcomponent subcomponent) {
+            this.module = module;
+            this.subcomponent = subcomponent;
         }
     }
 }

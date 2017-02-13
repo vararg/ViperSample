@@ -11,7 +11,7 @@ import com.vararg.vipersample.mainscreen.presenter.MainPresenter;
 import com.vararg.vipersample.mainscreen.router.MainRouter;
 import com.vararg.vipersample.mainscreen.router.MainRouterImpl;
 
-import javax.inject.Singleton;
+import java.lang.ref.WeakReference;
 
 import dagger.Module;
 import dagger.Provides;
@@ -23,19 +23,17 @@ import io.reactivex.Scheduler;
 
 @Module(includes = {DataModule.class})
 public class MainScreenModule {
-    private MainActivity mainActivity;
-
-    public MainScreenModule(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
-    }
+    private WeakReference<MainActivity> weakActivity;
 
     public void setMainActivity(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+        this.weakActivity = new WeakReference<>(mainActivity);
     }
 
     @Provides
     MainRouter provideMainRouter() {
-        return new MainRouterImpl(mainActivity);
+        MainActivity mainActivity = weakActivity.get();
+        if (mainActivity != null) return new MainRouterImpl(mainActivity);
+        else return null;
     }
 
     @Provides
