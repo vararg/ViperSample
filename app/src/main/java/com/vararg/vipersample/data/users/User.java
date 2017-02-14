@@ -33,4 +33,28 @@ public class User {
     public String getUrl() {
         return url;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (avatarUrl != null ? !avatarUrl.equals(user.avatarUrl) : user.avatarUrl != null)
+            return false;
+        return url != null ? url.equals(user.url) : user.url == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (avatarUrl != null ? avatarUrl.hashCode() : 0);
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        return result;
+    }
 }
